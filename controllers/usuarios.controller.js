@@ -2,9 +2,11 @@ const { response, request } = require('express');
 const Usuario = require('../models/usuario');
 
 const getUsuarios = async (req = request, res = response) => {
+  const usuarios = await Usuario.find();
+
   res.json({
     ok: true,
-    usuarios: [],
+    usuarios,
   });
 };
 
