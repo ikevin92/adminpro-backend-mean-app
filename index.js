@@ -16,17 +16,10 @@ app.use(logger('combined'));
 
 const port = 3000;
 
-//xfXzxTGqIB17vmHw
-//mean_user
-
 // Base de datos
 dbConnection();
 
 //Rutas
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Hola mundo',
-  });
-});
+app.get('/api/usuarios', require('./routes/usuarios.routes'));
 
 app.listen(port, () => console.log(`listening on http://localhost:${port}`));
