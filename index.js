@@ -8,18 +8,19 @@ const { dbConnection } = require('./database/config');
 
 // crear servidor express
 const app = express();
+const port = process.env.PORT || 3000;
 
 // Configurar CORS
 app.use(cors());
 // Morgan
 app.use(logger('combined'));
-
-const port = 3000;
+// Lectura y parseo del body
+app.use(express.json());
 
 // Base de datos
 dbConnection();
 
 //Rutas
-app.get('/api/usuarios', require('./routes/usuarios.routes'));
+app.use('/api/usuarios', require('./routes/usuarios.routes'));
 
 app.listen(port, () => console.log(`listening on http://localhost:${port}`));
