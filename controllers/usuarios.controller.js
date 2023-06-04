@@ -59,10 +59,21 @@ const actualizarUsuario = async (req = request, res = response) => {
 };
 
 const borrarUsuario = async (req = request, res = response) => {
-  res.json({
-    ok: true,
-    msg: 'borrando usuario',
-  });
+  try {
+    const uid = req.params.id;
+    await Usuario.findByIdAndDelete(uid);
+
+    res.json({
+      ok: true,
+      msg: 'Usuario eliminado',
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      ok: false,
+      msg: 'Error inesperado... revisar logs',
+    });
+  }
 };
 
 module.exports = {
