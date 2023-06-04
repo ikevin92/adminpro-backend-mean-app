@@ -2,6 +2,7 @@ const { response, request } = require('express');
 const { validationResult } = require('express-validator');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 
 const validarCampos = (req = request, res = response, next) => {
   const errores = validationResult(req);
@@ -18,7 +19,13 @@ const validarCampos = (req = request, res = response, next) => {
 
 const validarEmail = async (req = request, res = response, next) => {
   const { email } = req.body;
-  const existeEmail = await Usuario.findOne({ email });
+  let emailSearch = email;
+
+  if (req.headers['emailUsuarioDB']) {
+    emailSearch = req.headers['emailUsuarioDB'];
+  }
+
+  const existeEmail = await Usuario.findOne({ emailSearch });
 
   if (existeEmail) {
     return res.status(400).json({
@@ -37,8 +44,40 @@ const encriptarPassword = (req = request, res = response, next) => {
   next();
 };
 
+const existeUsuarioById = async (req = request, res = response, next) => {
+  console.log({ req, res });
+  const uid = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(uid)) {
+    return res.status(404).json({
+      ok: false,
+      msg: `El id ${uid} es invalido`,
+    });
+  }
+
+  const usuarioDB = await Usuario.findById(uid);
+  console.log(
+    `🚀 ~ file: validar-campos.js:53 ~ existeUsuarioById ~ usuarioDB:`,
+    usuarioDB,
+  );
+
+  if (!usuarioDB) {
+    return res.status(404).json({
+      ok: false,
+      msg: 'No existe un usuario por ese id',
+    });
+  }
+
+  if (usuarioDB.email !== req.body.email) {
+    req.headers['emailUsuarioDB'] = usuarioDB.email;
+  }
+
+  next();
+};
+
 module.exports = {
   validarCampos,
   validarEmail,
   encriptarPassword,
+  existeUsuarioById,
 };
