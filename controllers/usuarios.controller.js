@@ -1,5 +1,6 @@
 const { response, request } = require('express');
 const Usuario = require('../models/usuario');
+const bcrypt = require('bcryptjs');
 
 const getUsuarios = async (req = request, res = response) => {
   const usuarios = await Usuario.find();
@@ -13,7 +14,6 @@ const getUsuarios = async (req = request, res = response) => {
 const crearUsuario = async (req = request, res = response) => {
   try {
     const { body } = req;
-    const { email, password, nombre } = body;
 
     const usuario = new Usuario(body);
     await usuario.save();

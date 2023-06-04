@@ -12,6 +12,7 @@ const {
 const {
   validarCampos,
   validarEmail,
+  encriptarPassword,
 } = require('../middlewares/validar-campos');
 const router = Router();
 
@@ -24,7 +25,9 @@ router.post(
     check('email', 'El email es obligatorio').isEmail(),
     validarCampos,
     validarEmail,
+    encriptarPassword,
   ],
+
   crearUsuario,
 );
 router.put('/:id', actualizarUsuario);

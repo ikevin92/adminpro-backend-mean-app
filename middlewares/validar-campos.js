@@ -1,6 +1,7 @@
 const { response, request } = require('express');
 const { validationResult } = require('express-validator');
 const Usuario = require('../models/usuario');
+const bcrypt = require('bcryptjs');
 
 const validarCampos = (req = request, res = response, next) => {
   const errores = validationResult(req);
@@ -29,7 +30,15 @@ const validarEmail = async (req = request, res = response, next) => {
   next();
 };
 
+const encriptarPassword = (req = request, res = response, next) => {
+  const salt = bcrypt.genSaltSync();
+  req.body.password = bcrypt.hashSync(req.body.password, salt);
+
+  next();
+};
+
 module.exports = {
   validarCampos,
   validarEmail,
+  encriptarPassword,
 };
