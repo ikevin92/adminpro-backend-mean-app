@@ -45,7 +45,6 @@ const encriptarPassword = (req = request, res = response, next) => {
 };
 
 const existeUsuarioById = async (req = request, res = response, next) => {
-  console.log({ req, res });
   const uid = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(uid)) {
@@ -56,10 +55,6 @@ const existeUsuarioById = async (req = request, res = response, next) => {
   }
 
   const usuarioDB = await Usuario.findById(uid);
-  console.log(
-    `🚀 ~ file: validar-campos.js:53 ~ existeUsuarioById ~ usuarioDB:`,
-    usuarioDB,
-  );
 
   if (!usuarioDB) {
     return res.status(404).json({
