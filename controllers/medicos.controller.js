@@ -1,6 +1,7 @@
 const { response } = require('express');
 
 const Medico = require('../models/medico');
+const Hospital = require('../models/hospital');
 
 const getMedicos = async (req, res = response) => {
   const medicos = await Medico.find()
@@ -15,12 +16,21 @@ const getMedicos = async (req, res = response) => {
 
 const crearMedico = async (req, res = response) => {
   const uid = req.uid;
-  const medico = new Medico({
-    usuario: uid,
-    ...req.body,
-  });
-
   try {
+    const existeHospital = await Hospital.findById(req.body.hospital);
+
+    if (!existeHospital) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'No existe el hospital por favor valide',
+      });
+    }
+
+    const medico = new Medico({
+      usuario: uid,
+      ...req.body,
+    });
+
     const medicoDB = await medico.save();
 
     res.json({
