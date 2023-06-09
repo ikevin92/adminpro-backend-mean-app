@@ -47,13 +47,6 @@ const encriptarPassword = (req = request, res = response, next) => {
 const existeUsuarioById = async (req = request, res = response, next) => {
   const uid = req.params.id;
 
-  if (!mongoose.Types.ObjectId.isValid(uid)) {
-    return res.status(404).json({
-      ok: false,
-      msg: `El id ${uid} es invalido`,
-    });
-  }
-
   const usuarioDB = await Usuario.findById(uid);
 
   if (!usuarioDB) {

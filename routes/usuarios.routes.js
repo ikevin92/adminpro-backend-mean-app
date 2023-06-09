@@ -2,7 +2,7 @@
     Ruta: /api/usuarios
 */
 const { Router } = require('express');
-const { body } = require('express-validator');
+const { body, param } = require('express-validator');
 const {
   getUsuarios,
   crearUsuario,
@@ -39,6 +39,7 @@ router.put(
     body('nombre', 'El nombre es obligatorio').not().isEmpty(),
     body('email', 'El email es obligatorio').isEmail(),
     body('role', 'El role es obligatorio').not().isEmpty(),
+    param('id', 'No es un id valido').isMongoId(),
     validarCampos,
     existeUsuarioById,
     validarEmail,

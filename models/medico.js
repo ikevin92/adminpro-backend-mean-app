@@ -21,7 +21,7 @@ const MedicoSchema = Schema(
     },
   },
   {
-    collection: 'hospitales',
+    // collection: 'medicos',
     timestamps: true,
     versionKey: false,
   },
