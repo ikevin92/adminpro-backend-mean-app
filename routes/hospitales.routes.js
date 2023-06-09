@@ -28,9 +28,7 @@ router.post(
   ],
   crearHospital,
 );
-
 router.put('/:id', [], actualizarHospital);
-
 router.delete('/:id', borrarHospital);
 
 module.exports = router;

@@ -61,8 +61,8 @@ const borrarMedico = (req, res = response) => {
 };
 
 module.exports = {
-  getMedicos,
-  crearMedico,
   actualizarMedico,
   borrarMedico,
+  crearMedico,
+  getMedicos,
 };

@@ -29,8 +29,6 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
       await medico.save();
       return true;
 
-      break;
-
     case 'hospitales':
       const hospital = await Hospital.findById(id);
       if (!hospital) {
@@ -45,8 +43,6 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
       await hospital.save();
       return true;
 
-      break;
-
     case 'usuarios':
       const usuario = await Usuario.findById(id);
       if (!usuario) {
@@ -60,8 +56,6 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
       usuario.img = nombreArchivo;
       await usuario.save();
       return true;
-
-      break;
   }
 };
 
