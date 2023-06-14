@@ -12,6 +12,10 @@ const port = process.env.PORT || 3000;
 
 // Configurar CORS
 app.use(cors());
+
+//Carpeta publica
+app.use(express.static('./public'));
+
 // Morgan
 app.use(logger('combined'));
 // Lectura y parseo del body
