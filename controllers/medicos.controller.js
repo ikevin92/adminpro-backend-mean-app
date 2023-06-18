@@ -89,6 +89,15 @@ const borrarMedico = async (req, res = response) => {
   const id = req.params.id;
 
   try {
+    const existeHospital = await Hospital.findById(req.body.hospital);
+
+    if (!existeHospital) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'No existe el hospital por favor valide',
+      });
+    }
+
     const medico = await Medico.findById(id);
 
     if (!medico) {
